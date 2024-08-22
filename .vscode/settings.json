@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "gop.h": "c",
+        "efi_text_protocol.h": "c",
+        "efi_filesystem.h": "c",
+        "serial.h": "c",
+        "string": "c",
+        "format": "c",
+        "utilities.h": "c"
+    }
+}
