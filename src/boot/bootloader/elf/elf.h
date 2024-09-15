@@ -1,8 +1,7 @@
 #ifndef EFI_ELF_H
 #define EFI_ELF_H
 
-#include <efi_types.h>
-#include <efi_system.h>
+#include <efi.h>
 
 #define PT_LOAD 0x00000001
 

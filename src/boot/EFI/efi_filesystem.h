@@ -1,5 +1,5 @@
-#ifndef __EFI_FILESYSTEM_H
-#define __EFI_FILESYSTEM_H
+#ifndef _EFI_FILESYSTEM_H
+#define _EFI_FILESYSTEM_H
 
 #include <efi.h>
 
@@ -49,7 +49,7 @@ typedef struct {
 } EFI_FILE_SYSTEM_INFO;
 
 typedef struct {
-    CHAR16 VolumeLabel[];
+    CHAR16 * VolumeLabel;
 } EFI_FILE_SYSTEM_VOLUME_LABEL;
 
 typedef struct {

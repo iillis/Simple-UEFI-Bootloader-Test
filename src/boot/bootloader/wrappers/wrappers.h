@@ -4,8 +4,8 @@
 #include <efi_types.h>
 #include <efi_system.h>
 
-VOID WaitForKeyPress(void);
-INT CheckError(EFI_STATUS Status, CHAR16 * ErrorMessage, CHAR16 * SuccessMessage);
+VOID WaitForKeyPress(VOID);
+VOID CheckError(EFI_STATUS Status, CHAR16 * ErrorMessage, CHAR16 * SuccessMessage);
 VOID Error(EFI_STATUS Status, CHAR16 * ErrorMessage);
 VOID Exit(VOID);
 

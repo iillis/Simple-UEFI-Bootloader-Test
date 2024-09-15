@@ -1,7 +1,8 @@
-#ifndef __EFI_TYPES_H
-#define __EFI_TYPES_H
+#ifndef _EFI_TYPES_H
+#define _EFI_TYPES_H
 
 #include <stdint.h>
+#include <stddef.h>
 
 typedef void        VOID;
 typedef int         INT;
@@ -19,7 +20,7 @@ typedef uint64_t    UINT64;
 typedef INT64       INT128;
 typedef UINT64      UINT128;
 typedef char        CHAR8;
-typedef uint16_t    CHAR16;
+typedef wchar_t     CHAR16;
 typedef VOID       *EFI_EVENT;
 typedef VOID       *EFI_HANDLE;
 typedef uint64_t    EFI_LBA;
@@ -29,7 +30,9 @@ typedef uint64_t    EFI_TL;
 typedef uint64_t    EFI_TPL;
 typedef uint64_t    EFI_VIRTUAL_ADDRESS;
 
-#define NULL 0
+#ifndef NULL
+    #define NULL 0
+#endif
 
 #define IN 
 #define OUT 

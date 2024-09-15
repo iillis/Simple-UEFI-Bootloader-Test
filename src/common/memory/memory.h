@@ -3,7 +3,7 @@
 
 #include <efi_types.h>
 
-VOID *memcpy(VOID *dest, CONST VOID *src, UINTN n);
+VOID *Memcpy(VOID *dest, CONST VOID *src, UINTN n);
 VOID *Memset(VOID *s, INT c, UINTN n);
 VOID *Memmove(VOID *dest, CONST VOID *src, UINTN n);
 INT Memcmp(CONST VOID *s1, CONST VOID *s2, UINTN n);

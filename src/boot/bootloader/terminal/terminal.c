@@ -1,4 +1,6 @@
 #include "terminal.h"
+
+#include <efi.h>
 #include <bootloader.h>
 #include <utilities/utilities.h>
 

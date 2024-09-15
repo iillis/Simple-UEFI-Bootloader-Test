@@ -7,8 +7,7 @@
 #include <elf/elf.h>
 #include <cpu/cpu.h>
 #include <modules/gop/gop.h>
-#include <serial/serial.h>
-#include <utilities/utilities.h>
+#include <modules/protocols/test_boot_protocol.h>
 
 EFI_SYSTEM_TABLE * SystemTable;
 EFI_HANDLE ImageHandle = 0;
@@ -104,7 +103,7 @@ EFI_STATUS EFIAPI EfiMain(EFI_HANDLE imageHandle, EFI_SYSTEM_TABLE * systemTable
     for (UINT16 i = 0; i < Header->ProgramHeaderTableEntryCount; i++) {
         ELF64PHDR *Phdr = KernelImage + (Header->ProgramHeaderOffset + i * Header->ProgramHeaderTableEntrySize);
         if (Phdr->Type == PT_LOAD || Phdr->MemorySize != 0) {
-            memcpy(EfiCopy+(Phdr->VirtualAddress - 0xFFFFFFFF80000000),  (VOID *)(KernelImage) + Phdr->Offset, Phdr->FileSize);
+            Memcpy(EfiCopy+(Phdr->VirtualAddress - 0xFFFFFFFF80000000),  (VOID *)(KernelImage) + Phdr->Offset, Phdr->FileSize);
         }
     }
 
@@ -119,15 +118,14 @@ EFI_STATUS EFIAPI EfiMain(EFI_HANDLE imageHandle, EFI_SYSTEM_TABLE * systemTable
     }
 
     SetStackPointer(StackBase);
-    CHAR8 String[20];
-    Itoa(Framebuffer.Width, String);
-    SerialPrint(String);
+    
     /*
     *   JUMPING TO THE KERNEL
     */
-
-    __attribute__((sysv_abi)) VOID (*Entry)(FramebufferInfo * FramebufferStruct) = (__attribute__((sysv_abi)) VOID (*)(FramebufferInfo * FramebufferStruct))Header->Entry;
-    Entry(&Framebuffer);
+   
+    BootInfoTest BootInfo = { .Framebuffer = &Framebuffer};
+    __attribute__((sysv_abi)) VOID (*Entry)(BootInfoTest * BootInfoStruct) = (__attribute__((sysv_abi)) VOID (*)(BootInfoTest * BootInfoStruct))Header->Entry;
+    Entry(&BootInfo);
     for(;;);
 }
 
