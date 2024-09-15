@@ -5,7 +5,7 @@ A simple higher half x86_64 bootloader.
 mkdir build
 cd build
 cmake ..
-#either copy your OVMF image in build/bin or run cmake.. again
+#an OVMF image will automatically be copied
 cmake --build .
 ```
 ## Running the test
