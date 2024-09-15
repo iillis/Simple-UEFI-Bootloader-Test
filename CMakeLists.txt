@@ -130,7 +130,7 @@ set(
         DEFAULT_QEMU_FLAGS
         -m 4G
         -bios bin/OVMF.fd
-        -drive file=bin/os.img
+        -drive file=bin/output.img
         -device VGA,edid=on,xres=1920,yres=1080
         -d int,guest_errors,cpu_reset
         -no-reboot
