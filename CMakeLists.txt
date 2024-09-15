@@ -18,7 +18,7 @@ set(CMAKE_ASM_NASM_OBJECT_FORMAT elf64)
 add_link_options(-fuse-ld=lld)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/build/bin)
-set(IMAGE_OUTPUT_NAME "os")
+set(IMAGE_OUTPUT_NAME "output")
 set(KERNEL_OUTPUT_NAME "kernel")
 
 #BOOTLOADER
@@ -28,7 +28,7 @@ add_executable(SRC_BOOTLOADER ${BOOTLOADER_FILES})
 
 set_target_properties(SRC_BOOTLOADER PROPERTIES OUTPUT_NAME BOOTX64.EFI)
 
-target_include_directories(SRC_BOOTLOADER PRIVATE src/boot/bootloader src/boot/EFI src/common)
+target_include_directories(SRC_BOOTLOADER PRIVATE src/boot/bootloader/ src/boot/EFI/ src/common/)
 
 target_compile_options(
         SRC_BOOTLOADER
@@ -41,9 +41,7 @@ target_compile_options(
         -fno-builtin-printf
         -fno-builtin-free
         -Wno-fortify-source
-        -nostdlib
-        -fno-stack-protector
-        -fno-stack-check
+        -O3
         
         )
 
@@ -51,8 +49,6 @@ target_link_options(
         SRC_BOOTLOADER
 
         PRIVATE
-        -fno-stack-protector 
-        -fno-stack-check
         -target x86_64-unknown-windows
         -nostdlib
         -Wl,-entry:EfiMain
@@ -68,14 +64,14 @@ add_executable(SRC_KERNEL ${KERNEL_FILES})
 
 set_target_properties(SRC_KERNEL PROPERTIES OUTPUT_NAME ${KERNEL_OUTPUT_NAME}.elf)
 
-target_include_directories(SRC_KERNEL PRIVATE src/kernel src/common src/boot/EFI )
+target_include_directories(SRC_KERNEL PRIVATE src/kernel src/common src/boot/EFI src/boot/bootloader/)
 
 target_compile_options(
         SRC_KERNEL
 
         PRIVATE
-        $<$<COMPILE_LANGUAGE:C CXX ASM_NASM>:
         -Wall
+        -fno-stack-protector
         -fPIC
         -mabi=sysv
         -mno-80387
@@ -87,15 +83,10 @@ target_compile_options(
         -mno-red-zone
         -mcmodel=kernel
         -fno-builtin-printf
-        -masm=intel
         -gdwarf-5
         -fno-omit-frame-pointer
         -fno-builtin-free
         -Wno-fortify-source
-        -Wno-interrupt-service-routine
-        -fno-stack-protector 
-        -fno-stack-check
-        >
 )
 
 target_link_options(
@@ -108,8 +99,6 @@ target_link_options(
         -static-pie
         -z max-page-size=0x1000
         -T ${PROJECT_SOURCE_DIR}/src/kernel/linker/kernel.ld
-        -fno-stack-protector 
-        -fno-stack-check
 )
 
 if(NOT EXISTS "bin/OVMF.fd")
@@ -123,7 +112,7 @@ add_custom_target(
         create_image
 
         ALL
-        COMMAND dd if=/dev/zero bs=1M seek=64 of=bin/${IMAGE_OUTPUT_NAME}.img bs=512 count=0
+        COMMAND dd if=/dev/zero of=bin/${IMAGE_OUTPUT_NAME}.img bs=50K count=1 status=progress
         COMMAND mformat -i bin/${IMAGE_OUTPUT_NAME}.img ::
         COMMAND mmd -i bin/${IMAGE_OUTPUT_NAME}.img ::/EFI
         COMMAND mmd -i bin/${IMAGE_OUTPUT_NAME}.img ::/EFI/BOOT
@@ -141,8 +130,8 @@ set(
         DEFAULT_QEMU_FLAGS
         -m 4G
         -bios bin/OVMF.fd
-        -drive file=bin/os.img
-        -device VGA,edid=on,xres=1920,yres=1080 
+        -drive file=bin/output.img
+        -device VGA,edid=on,xres=1920,yres=1080
         -d int,guest_errors,cpu_reset
         -no-reboot
         -no-shutdown

@@ -1,5 +1,5 @@
-#ifndef __EFI_BOOT_SERVICES_H
-#define __EFI_BOOT_SERVICES_H
+#ifndef _EFI_BOOT_SERVICES_H
+#define _EFI_BOOT_SERVICES_H
 
 #include "efi.h"
 #include "efi_device_path_protocol.h"

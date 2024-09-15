@@ -2,7 +2,7 @@
 #include <efi_types.h>
 #include <memory/memory.h>
 
- VOID Itoa16(INT Number, CHAR16 String[]) {
+VOID Itoa16(INT Number, CHAR16 String[]) {
      int i, Sign;
  
      if ((Sign = Number) < 0)
@@ -15,9 +15,9 @@
          String[i++] = '-';
      String[i] = '\0';
      Strrev16(String);
- }
+}
 
-  VOID Itoa(INT Number, CHAR8 String[]) {
+VOID Itoa(INT Number, CHAR8 String[]) {
      int i, Sign;
  
      if ((Sign = Number) < 0)
@@ -30,7 +30,7 @@
          String[i++] = '-';
      String[i] = '\0';
      Strrev(String);
- }
+}
 
 CHAR16* U64ToHex(UINT64 Input) {
     UINT8 Limit = 19;

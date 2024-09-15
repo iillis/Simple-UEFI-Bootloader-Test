@@ -11,7 +11,7 @@ VOID WaitForKeyPress() {
         SystemTable->ConIn->ReadKeyStroke(SystemTable->ConIn, &Key);
 }
 
-INT CheckError(EFI_STATUS Status, CHAR16 * ErrorMessage, CHAR16 * SuccessMessage) {
+VOID CheckError(EFI_STATUS Status, CHAR16 * ErrorMessage, CHAR16 * SuccessMessage) {
     if(Status != EFI_SUCCESS){
         SystemTable->ConOut->SetAttribute(SystemTable->ConOut, EFI_RED | EFI_BACKGROUND_BLACK);
         Print(L"Error:\t");
@@ -32,7 +32,7 @@ INT CheckError(EFI_STATUS Status, CHAR16 * ErrorMessage, CHAR16 * SuccessMessage
         Exit();
     }
     Print(SuccessMessage);
-    return EFI_SUCCESS;
+    return;
 }
 
 VOID Error(EFI_STATUS Status, CHAR16 * ErrorMessage) {

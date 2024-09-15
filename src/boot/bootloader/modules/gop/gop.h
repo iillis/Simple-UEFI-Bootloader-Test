@@ -1,7 +1,7 @@
 #ifndef GOP_H
 #define GOP_H
 
-#include <efi_types.h>
+#include <efi.h>
 
 typedef struct {
     UINT64 FramebufferBase;

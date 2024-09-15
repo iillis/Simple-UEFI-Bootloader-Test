@@ -1,5 +1,5 @@
-#ifndef __EFI_INCLUDE_H
-#define __EFI_INCLUDE_H
+#ifndef _EFI_INCLUDE_H
+#define _EFI_INCLUDE_H
 
 #include "efi_types.h"
 #include "efi_boot_services.h"

@@ -1,6 +1,6 @@
 #include "memory.h"
 
-VOID *memcpy(VOID *D1, CONST VOID *S1, UINTN n) {
+VOID *Memcpy(VOID *D1, CONST VOID *S1, UINTN n) {
     UINT8 *D2 = (UINT8 *)D1;
     CONST UINT8 *S2 = (CONST UINT8 *)S1;
 
@@ -77,7 +77,7 @@ INT Strcmp(CONST CHAR8 *S1, CONST CHAR8 *S2) {
 
 CHAR8 * Strrev(CHAR8 String[]) {
 	INT i, j;
-	char Temp;
+	CHAR8 Temp;
 	
 	for (i=0, j=Strlen(String)-1 ; i<j ; i++, j--) {
 		Temp = String[i];
@@ -90,7 +90,7 @@ CHAR8 * Strrev(CHAR8 String[]) {
 
 CHAR16 * Strrev16(CHAR16 String[]) {
 	INT i, j;
-	char Temp;
+	CHAR16 Temp;
 	
 	for (i=0, j=Strlen16(String)-1 ; i<j ; i++, j--) {
 		Temp = String[i];
@@ -101,8 +101,8 @@ CHAR16 * Strrev16(CHAR16 String[]) {
 	return String;
 }
 
-UINTN Strlen(const char *str) {
-	register const char *s;
+UINTN Strlen(const CHAR8 *str) {
+	register const CHAR8 *s;
 
 	for (s = str; *s; ++s);
 	return(s - str);

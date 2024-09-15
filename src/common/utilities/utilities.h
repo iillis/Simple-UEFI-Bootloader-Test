@@ -3,8 +3,9 @@
 
 #include <efi_types.h>
 
-CHAR16* U64ToHex(UINT64 Input);
-VOID Itoa(INT Number, CHAR8 String[]);
 VOID Itoa16(INT Number, CHAR16 String[]);
+VOID Itoa(INT Number, CHAR8 String[]);
+CHAR16* U64ToHex(UINT64 Input);
+
 
 #endif

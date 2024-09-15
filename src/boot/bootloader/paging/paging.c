@@ -1,10 +1,10 @@
 #include "paging.h"
+#include <efi.h>
 #include <memory/memory.h>
 #include <terminal/terminal.h>
 #include <bootloader.h>
 #include <wrappers/wrappers.h>
 #include <cpu/cpu.h>
-#include <efi_types.h>
 
 PAGE_TABLE* Pml4 = NULL;
 UINT64 FreeEntry = 0;
@@ -18,7 +18,6 @@ PAGE_TABLE* InitPageTables(UINT8** Memory) {
     return Table;
 }
 
-// Function to map a virtual address to a physical address
 VOID MapPage(PAGE_TABLE* Pml4, UINT64 VirtualAddress, UINT64 PhysicalAddress, UINT64 Flags, UINT8** Memory) {
     int Pml4Index = (VirtualAddress >> 39) & 0x1FF;
     int PdpIndex = (VirtualAddress >> 30) & 0x1FF;
@@ -78,7 +77,7 @@ VOID SetupPaging() {
 
     EFI_MEMORY_DESCRIPTOR *LastEntry = NULL;
     for(UINTN i = MemoryMapEntriesCount-1; i>= 0; i--) {
-        LastEntry = (void *)MemoryMap + i * EfiDescriptorSize;
+        LastEntry = (VOID *)MemoryMap + i * EfiDescriptorSize;
         if( LastEntry->Type != EfiReservedMemoryType &&
             LastEntry->Type != EfiUnusableMemory &&
             LastEntry->Type != EfiMemoryMappedIO &&
@@ -100,7 +99,7 @@ VOID SetupPaging() {
     PrintIntPrefix(MemorySize/1073741824, L"Memory Size (GB): \t");
     
     for(UINTN i = 0; i < MemoryMapEntriesCount; i++) {
-        EFI_MEMORY_DESCRIPTOR *Entry = (void *)MemoryMap + i * EfiDescriptorSize;
+        EFI_MEMORY_DESCRIPTOR *Entry = (VOID *)MemoryMap + i * EfiDescriptorSize;
         if(FreeEntry == 0 && Entry->Type == EfiConventionalMemory && Entry->NumberOfPages >= PagingStructTotalCount){
             FreeEntry = (UINT64)Entry->PhysicalStart;
             goto Success;

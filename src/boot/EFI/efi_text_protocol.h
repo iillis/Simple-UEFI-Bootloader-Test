@@ -1,5 +1,5 @@
-#ifndef __EFI_TEXT_PROTOCOL_H
-#define __EFI_TEXT_PROTOCOL_H
+#ifndef _EFI_TEXT_PROTOCOL_H
+#define _EFI_TEXT_PROTOCOL_H
 
 #include "efi.h"
 

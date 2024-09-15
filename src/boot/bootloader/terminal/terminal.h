@@ -1,7 +1,7 @@
 #ifndef EFI_ITOA_H
 #define EFI_ITOA_H
 
-#include <efi_types.h>
+#include <efi.h>
 
 VOID Print(CHAR16 * text);
 VOID Newline(VOID);

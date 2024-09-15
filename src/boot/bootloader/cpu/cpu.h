@@ -1,7 +1,7 @@
 #ifndef EFI_CPU_H
 #define EFI_CPU_H
 
-#include <efi_types.h>
+#include <efi.h>
 
 static inline VOID SetCr3(UINT64 Value) {
     asm volatile (

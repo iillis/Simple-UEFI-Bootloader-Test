@@ -1,6 +1,6 @@
 #include "gop.h"
+#include <efi.h>
 #include <bootloader.h>
-#include <efi_graphic_output_protocol.h>
 #include <wrappers/wrappers.h>
 #include <terminal/terminal.h>
 
